@@ -14,7 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', function () { return view('welcome'); });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('pods', 'PodController', ['only' => ['index', 'store', 'destroy']]);
+
+Route::resource('aliens', 'AlienController', ['only' => ['store', 'destroy', 'update']]);
+
