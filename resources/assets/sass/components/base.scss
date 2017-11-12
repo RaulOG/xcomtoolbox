@@ -1,0 +1,15 @@
+html {
+	background-color: black;
+}
+
+html::after {
+	content: "";
+	background-image: url('/images/xcom.jpg');
+	opacity: 0.5;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	z-index: -1;
+}

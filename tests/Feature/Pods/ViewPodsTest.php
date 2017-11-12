@@ -21,7 +21,7 @@ class ViewPodsTest extends TestCase
         $response = $this->get('/pods');
 
         $response->assertSuccessful();
-        $response->assertSee('No pods');
+        $response->assertSee('no pods');
     }
 
     /**
