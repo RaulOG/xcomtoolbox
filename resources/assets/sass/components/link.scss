@@ -1,4 +1,18 @@
 .link {
+	vertical-align: middle;
 	color: $main-color;
 	text-decoration: none;
+
+	&--logo {
+		font-size: 3rem;
+	}
+
+	&--button {
+		padding: 5px 12px;
+		border: 2px solid $main-color;
+
+		&:hover{
+			background-color: rgba(white, 0.4);
+		}
+	}
 }
