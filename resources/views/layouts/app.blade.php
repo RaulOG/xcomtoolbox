@@ -14,6 +14,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dropdown.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/transition.css" rel="stylesheet">
+
+    <!-- Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
+
+
     <style>
         .item {
             font-size: 14px !important;
