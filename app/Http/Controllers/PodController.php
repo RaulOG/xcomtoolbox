@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Alien;
+use App\AlienType;
 use App\Pod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,9 +26,11 @@ class PodController extends Controller
     public function index()
     {
         $pods = Pod::where('user_id', Auth::user()->id)->get()->load('aliens.type');
+        $alienTypes = AlienType::all();
 
         return view('pod/index')
-            ->with('pods', $pods);
+            ->with('pods', $pods)
+            ->with('alien_types', $alienTypes);
     }
 
     /**
@@ -49,6 +53,19 @@ class PodController extends Controller
     {
         $pod = new Pod;
         Auth::user()->pods()->save($pod);
+
+        if($request->has('alien_count')){
+            // validation
+            if($request->input('alien_count') > 1 && $request->input('alien_count') < 7){
+                for($i = 0 ; $i < $request->input('alien_count'); $i++){
+                    $alien = new Alien;
+                    if($request->has('alien_types') && $request->input('alien_types')[$i] !== null){
+                        $alien->type()->associate(AlienType::find($request->input('alien_types')[$i]));
+                    }
+                    $pod->aliens()->save($alien);
+                }
+            }
+        }
 
         return redirect('pods');
     }

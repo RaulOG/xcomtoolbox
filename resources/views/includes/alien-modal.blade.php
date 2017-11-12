@@ -15,7 +15,7 @@
                         {{--<li style="display:inline-block;"><button style="background-color:transparent;outline:none;"><img src="images/alien_types/floater.png" alt="floater" style="height:100px;"/></button></li>--}}
                         {{--<li style="display:inline-block;"><button style="background-color:transparent;outline:none;"><img src="images/alien_types/thinman.png" alt="thinman" style="height:100px;"/></button></li>--}}
                         <li style="display:inline-block;"><label><input type="radio" name="alien_type" value="sectoid" style="background-color:transparent;outline:none;"><img src="images/alien_types/sectoid.png" alt="sectoid" style="height:100px;"/></label></li>
-                        <li style="display:inline-block;"><label><input type="radio" name="alien_type" value="drone" style="background-color:transparent;outline:none;"><img src="images/alien_types/drone.jpg" alt="drone" style="height:100px;"/></label></li>
+                        <li style="display:inline-block;"><label><input type="radio" name="alien_type" value="drone" style="background-color:transparent;outline:none;"><img src="images/alien_types/drone.png" alt="drone" style="height:100px;"/></label></li>
                         <li style="display:inline-block;"><label><input type="radio" name="alien_type" value="floater" style="background-color:transparent;outline:none;"><img src="images/alien_types/floater.png" alt="floater" style="height:100px;"/></label></li>
                     </ul>
                 </div>
