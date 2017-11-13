@@ -22,3 +22,23 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: '#app'
 });
+
+
+/**
+ * Toolbox
+ */
+var toolbox         = $(".toolbox");
+var toolboxCommand  = $('.toolbox__command');
+
+window.onload = function(){
+    TweenMax.to(toolbox, 0.6, { delay: 0.3, opacity: 1});
+};
+
+toolboxCommand.click(function(){
+    TweenMax.to(toolbox, 0.6, {
+        opacity: 0,
+        onComplete: function(){
+            location.href = "/toolbox/" + $(this).attr("data-value");
+        }.bind($(this))
+    });
+});

@@ -11252,7 +11252,26 @@ window.Vue = __webpack_require__(35);
 Vue.component('example', __webpack_require__(38));
 
 var app = new Vue({
-  el: '#app'
+    el: '#app'
+});
+
+/**
+ * Toolbox
+ */
+var toolbox = $(".toolbox");
+var toolboxCommand = $('.toolbox__command');
+
+window.onload = function () {
+    TweenMax.to(toolbox, 0.6, { delay: 0.3, opacity: 1 });
+};
+
+toolboxCommand.click(function () {
+    TweenMax.to(toolbox, 0.6, {
+        opacity: 0,
+        onComplete: function () {
+            location.href = "/toolbox/" + $(this).attr("data-value");
+        }.bind($(this))
+    });
 });
 
 /***/ }),

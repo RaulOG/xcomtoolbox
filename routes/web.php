@@ -22,7 +22,13 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('aliens', 'AlienController', ['only' => ['store', 'destroy', 'update']]);
 
     Route::prefix('toolbox')->group(function(){
-        Route::get('/mission-assistance', 'ToolboxController@mission_assistance');
+        Route::prefix('mission-inbound')->group(function() {
+            Route::get('/', 'ToolboxController@mission_inbound');
+            Route::get('/abduction', 'ToolboxController@abduction');
+            Route::get('/crash', 'ToolboxController@crash');
+            Route::get('/landing', 'ToolboxController@landing');
+            Route::get('/council', 'ToolboxController@council');
+        });
     });
 });
 

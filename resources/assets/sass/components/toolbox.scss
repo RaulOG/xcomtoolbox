@@ -1,14 +1,48 @@
 .toolbox {
 	font-size: 0px;
+	position: relative;
+	opacity: 0;
 
-	img {
-		position: absolute;
-		height:100%;
+	&__panel {
+		padding: 0px;
+	}
 
-		top:0px;
-		right:0px;
-		bottom:0px;
+	&__command {
+		display: inline-block;
+		background-color: black;
+		margin: 30px 0;
+		padding: 60px 0px;
+		font-size: 2rem;
+		text-align: center;
 
-		z-index:-1;
+		width: 100%;
+
+		.toolbox__panel--double & {
+			width: 40%;
+			margin: 2.5% 5%;
+		}
+
+		.toolbox__panel--triple & {
+			width: 30%;
+			margin: 2.5% 1.5%;
+		}
+
+		&:hover{
+			background-color: rgba(0,0,0, 0.8);
+			background-image: linear-gradient(to right,#000,rgba(255,255,255,0.3));
+		}
+
+		//&:before {
+		//	content: '';
+		//	position: absolute;
+		//	top: 0;
+		//	right: 0;
+		//	bottom: 0;
+		//	left: 0;
+		//	background-image: linear-gradient(to right,#000,#777);
+		//	background: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1)); /*Standard*/
+		//	opacity: 0;
+		//	z-index: -1;
+		//}
 	}
 }
