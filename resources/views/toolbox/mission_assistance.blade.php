@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="homepage container">
+    <div class="container">
         <h1 class="h1">Which mission is inbound?</h1>
 
         <div class="mission_assistance">
