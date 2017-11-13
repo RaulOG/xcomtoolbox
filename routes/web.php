@@ -20,5 +20,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::resource('pods', 'PodController', ['only' => ['index', 'store', 'destroy']]);
 
     Route::resource('aliens', 'AlienController', ['only' => ['store', 'destroy', 'update']]);
+
+    Route::prefix('toolbox')->group(function(){
+        Route::get('/mission-assistance', 'ToolboxController@mission_assistance');
+    });
 });
 

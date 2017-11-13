@@ -1,0 +1,14 @@
+.toolbox {
+	font-size: 0px;
+
+	img {
+		position: absolute;
+		height:100%;
+
+		top:0px;
+		right:0px;
+		bottom:0px;
+
+		z-index:-1;
+	}
+}
