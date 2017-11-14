@@ -28,13 +28,13 @@ const app = new Vue({
  * Toolbox
  */
 var toolbox         = $(".toolbox");
-var toolboxCommand  = $('.toolbox__command');
+var toolboxButton   = $('.toolbox__button[data-value]');
 
 window.onload = function(){
     TweenMax.to(toolbox, 0.6, { delay: 0.3, opacity: 1});
 };
 
-toolboxCommand.click(function(){
+toolboxButton.click(function(){
     TweenMax.to(toolbox, 0.6, {
         opacity: 0,
         onComplete: function(){
