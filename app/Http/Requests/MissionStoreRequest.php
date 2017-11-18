@@ -29,7 +29,7 @@ class MissionStoreRequest extends FormRequest
                 'required',
                 Rule::in(['crash', 'landing', 'abduction', 'terror', 'council',]),
             ],
-            'aliencraft'    =>  [
+            'ufo'    =>  [
                 'required_if:type, crash, landing',
                 Rule::in(['scout', 'fighter', 'raider']),
             ],
@@ -38,7 +38,7 @@ class MissionStoreRequest extends FormRequest
                 Rule::in(['light', 'moderate', 'heavy', 'swarming']),
             ],
             'council'    =>  [
-                'required_if:type, council',
+                'required_if:type, council_mission',
                 Rule::in(['siterecon', 'targetextraction', 'targetescort', 'assetrecovery', 'bombdisposal', 'slingshotprogeny']),
 
             ],

@@ -11261,12 +11261,12 @@ var app = new Vue({
 var toolbox = $(".toolbox");
 var toolboxButton = $('.toolbox__button[data-value]');
 
-window.onload = function () {
-    TweenMax.to(toolbox, 0.6, { delay: 0.3, opacity: 1 });
-};
+//window.onload = function(){
+//    TweenMax.to(toolbox, 0.6, { delay: 0.3, opacity: 1});
+//};
 
 toolboxButton.click(function () {
-    TweenMax.to(toolbox, 0.6, {
+    TweenMax.to(toolbox, 0.1, {
         opacity: 0,
         onComplete: function () {
             location.href = "/toolbox/" + $(this).attr("data-value");

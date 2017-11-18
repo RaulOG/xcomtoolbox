@@ -6,6 +6,9 @@
             </div>
             <form style="display:inline;" action="{{route('pods.store')}}" method="post">
                 {{csrf_field()}}
+                @if(isset($mission))
+                    <input type="hidden" name="mission" value="{{ $mission->id }}">
+                @endif
 
                 <div class="modal-body">
                     <h5>Number of aliens</h5>

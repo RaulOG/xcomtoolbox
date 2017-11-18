@@ -21,7 +21,9 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::resource('aliens', 'AlienController', ['only' => ['store', 'destroy', 'update']]);
 
-    Route::resource('missions', 'MissionController', ['only' => ['store']]);
+//    Route::resource('missions', 'MissionController', ['only' => ['store', 'show']]);
+
+    Route::resource('missions', 'MissionController', ['only' => ['store', 'show']]);
 
     Route::prefix('toolbox')->group(function(){
         Route::prefix('mission-inbound')->group(function() {

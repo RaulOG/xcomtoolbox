@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pod::class);
     }
+
+    public function missions()
+    {
+        return $this->hasMany(Mission::class);
+    }
 }

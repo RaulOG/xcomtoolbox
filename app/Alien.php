@@ -15,4 +15,9 @@ class Alien extends Model
     {
         return $this->belongsTo(AlienType::class, 'alien_type_id');
     }
+
+    public function mission()
+    {
+        return $this->belongsTo(Mission::class);
+    }
 }

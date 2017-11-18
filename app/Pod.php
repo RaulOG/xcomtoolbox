@@ -15,4 +15,9 @@ class Pod extends Model
     {
         return $this->hasMany(Alien::class);
     }
+
+    public function mission()
+    {
+        return $this->belongsTo(Mission::class);
+    }
 }

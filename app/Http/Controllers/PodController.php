@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Alien;
 use App\AlienType;
+use App\Mission;
 use App\Pod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class PodController extends Controller
      */
     public function index()
     {
-        $pods = Pod::where('user_id', Auth::user()->id)->get()->load('aliens.type');
+        $pods = Pod::where('user_id', Auth::user()->id)->whereDoesntHave('mission')->get()->load('aliens.type');
         $alienTypes = AlienType::all();
 
         return view('pod/index')
@@ -44,6 +45,12 @@ class PodController extends Controller
     public function store(Request $request)
     {
         $pod = new Pod;
+
+        if($request->has('mission')){
+            $mission = Mission::find($request->input('mission'));
+            $pod->mission()->associate($mission);
+        }
+
         Auth::user()->pods()->save($pod);
 
         if($request->has('alien_count')){
@@ -54,12 +61,21 @@ class PodController extends Controller
                     if($request->has('alien_types') && $request->input('alien_types')[$i] !== null){
                         $alien->type()->associate(AlienType::find($request->input('alien_types')[$i]));
                     }
+
+                    if(isset($mission)){
+                        $alien->mission()->associate($mission);
+                    }
+
                     $pod->aliens()->save($alien);
                 }
             }
         }
 
-        return redirect('pods');
+        if(isset($mission)){
+            return redirect('/missions/'.$mission->id);
+        }
+
+        return redirect('/pods');
     }
 
     /**

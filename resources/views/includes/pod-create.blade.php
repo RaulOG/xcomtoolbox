@@ -6,6 +6,13 @@
 </form>
 -->
 
+<button class="button" type="button" data-toggle="modal" data-target="#pod-create">
+    <img class="image" src="/images/alien_types/sectoid.png" alt="sectoid">
+    <img class="image" src="/images/alien_types/drone.png" alt="drone">
+    <img class="image" src="/images/alien_types/thinman.png" alt="thinman">
+    <img class="image" src="/images/alien_types/floater.png" alt="floater">
+</button>
+
 <button style="display:block;" type="button" data-toggle="modal" data-target="#pod-create">Create pod</button>
 
-@include('includes.pod-modal')
+@include('includes.pod-modal', ['mission' => isset($mission) ? $mission : null])
