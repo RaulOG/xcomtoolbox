@@ -85,7 +85,7 @@
         </form>
 
         <div class="toolbox__panel toolbox__panel--double">
-            <button class="button toolbox__button">OVERVIEW</button>
+            <button class="button toolbox__button" data-value="overview">OVERVIEW</button>
             <button class="button toolbox__button" data-value="mission-inbound">MISSION INBOUND</button>
             <button class="button toolbox__button">AIR ENGAGEMENT</button>
             <button class="button toolbox__button">SCIENCE PLAN</button>
