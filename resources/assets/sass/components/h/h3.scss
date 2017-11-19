@@ -1,3 +1,13 @@
 .h3 {
+	font-size: 2rem;
 	color: white;
+
+	&--meld {
+		color:orange;
+		animation: blinker 1.75s linear infinite;
+	}
+}
+
+@keyframes blinker {
+	50% { opacity: 0; }
 }

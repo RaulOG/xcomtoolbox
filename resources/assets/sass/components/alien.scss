@@ -1,0 +1,25 @@
+.alien {
+	display: inline-block;
+	margin: 0 20px;
+	position: relative;
+	animation-fill-mode: forwards;
+	vertical-align: middle;
+
+	&--unknown {
+		color: #5BF3FA;
+		font-size: 4rem;
+	}
+
+	//&:hover {
+	//	animation: flash 1s ease-in-out forwards;
+	//}
+}
+
+//@keyframes flash {
+//	0% {
+//		opacity: .4;
+//	}
+//	100% {
+//		opacity: 1;
+//	}
+//}

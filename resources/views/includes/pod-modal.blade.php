@@ -57,7 +57,7 @@
         @endforeach
 
         var alienTypeDropdown = '' +
-                '<div class="ui selection dropdown alien">' +
+                '<div class="ui selection dropdown alien_js">' +
                 '<input type="hidden" name="alien_types[]">' +
                 '<i class="dropdown icon"></i>' +
                 '<div class="text">' +
@@ -76,14 +76,14 @@
                             $('.aliens').append(alienTypeDropdown);
                         }
                     }
-                    $('.alien').dropdown({});
+                    $('.alien_js').dropdown({});
                     $('.alien_dominant').show();
                     $('.aliens').show();
                 }
             });
             $('.alien_dominant').dropdown({
                 onChange: function (value, text, $selectedItem) {
-                    $('.alien').dropdown('set selected', value);
+                    $('.alien_js').dropdown('set selected', value);
 //                    for(var i = 0; i < $('.alien_count').dropdown('get value'); i++ ){
 //                        $('.aliens').append(alienTypeDropdown);
 //                    }
