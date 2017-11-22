@@ -1,0 +1,17 @@
+// In this file you will find some modifications to bootstrap component.
+// The aim of such modifications is to give the dropdown an xcom style.
+
+.dropdown-menu {
+	border: 2px solid $main-color;
+	background-color: rgba(0,0,0,0.6);
+	color: white;
+
+	& li a {
+		color: $main-color;
+
+		&:hover {
+			color: white;
+			background-color: rgba(91,243,250,0.6);
+		}
+	}
+}

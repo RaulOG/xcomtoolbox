@@ -25,7 +25,7 @@
             {{--assetrecovery--}}
             {{--bombdisposal--}}
             {{--slingshotprogeny--}}
-
+<!--
         {{--abduction--}}
         <form action="/missions" method="post">
             {{csrf_field()}}
@@ -83,6 +83,7 @@
             {{--slingshotprogeny--}}
             <button style="width:170px;height:30px;font-size:14px;" type="submit" name="council_mission" value="slingshotprogeny">slingshotprogeny council</button>
         </form>
+        -->
 
         <div class="toolbox__panel toolbox__panel--double">
             <button class="button toolbox__button" data-value="overview">OVERVIEW</button>

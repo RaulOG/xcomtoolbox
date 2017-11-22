@@ -9,7 +9,7 @@
     <ul class="dropdown-menu" style="min-width: initial; padding:0px">
         <li>
             {{--<button type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>--}}
-            <button type="button" style="height:52px;width:52px;" data-toggle="modal" data-target="#alien-{{$alien->id}}">
+            <button type="button" style="height:52px;width:52px;" data-toggle="modal" data-target="#alien-{{$alien->id}}-edit">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             </button>
         </li>

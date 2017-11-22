@@ -1,0 +1,27 @@
+// In this file you will find some modifications to bootstrap component.
+// The aim of such modifications is to give the modals an xcom style.
+
+.modal {
+	&-content {
+		color: white;
+		background-color: rgba(0,0,0,0.8);
+		border: 2px solid $main-color;
+	}
+
+	&-header {
+		color: white;
+		border-bottom: 1px solid #5BF3FA;
+	}
+
+	&-title {
+		color: #5BF3FA;
+	}
+
+	&-body {
+		color: #5BF3FA;
+	}
+
+	&-footer {
+		border-top: 1px solid #5BF3FA;
+	}
+}

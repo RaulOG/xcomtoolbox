@@ -84,6 +84,10 @@ class AlienController extends Controller
             $alien->save();
         }
 
+        if($request->has('mission')){
+            return redirect('/missions/'.$request->input('mission'));
+        }
+
         return redirect('pods');
     }
 
@@ -93,12 +97,16 @@ class AlienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $alien = Alien::find($id);
 
         if(!empty($alien) && $alien->pod->user->id == Auth::user()->id){
             $alien->delete();
+        }
+
+        if($request->has('mission')){
+            return redirect('/missions/'.$request->input('mission'));
         }
 
         return redirect('pods');

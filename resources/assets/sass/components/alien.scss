@@ -6,8 +6,17 @@
 	vertical-align: middle;
 
 	&--unknown {
-		color: #5BF3FA;
+		color: $main-color;
 		font-size: 4rem;
+	}
+
+	& input[type=radio] + label {
+		border: 2px solid transparent;
+	}
+
+	& input[type=radio]:checked + label {
+		border: 2px solid #5BF3FA;
+		background-color: rgba(91,243,250,0.3);
 	}
 
 	//&:hover {

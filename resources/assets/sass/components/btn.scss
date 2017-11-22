@@ -1,0 +1,12 @@
+// In this file you will find some modifications to bootstrap component.
+// The aim of such modifications is to give the btns an xcom style.
+
+.btn {
+	background-color: rgba(91,243,250,0.6);
+	color: white;
+
+	&:hover {
+		color: lightgrey;
+		background: rgba(41, 193, 200, 0.6);
+	}
+}
