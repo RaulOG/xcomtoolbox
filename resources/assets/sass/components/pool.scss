@@ -1,0 +1,40 @@
+.pool {
+	display: none;
+	width: 50%;
+	padding: 0;
+	//padding: 0 30px;
+	box-sizing: border-box;
+	margin: 10px 0;
+	position:relative;
+
+	&__list {
+		padding: 5px 0;
+		display: inline-block;
+		width: 75%;
+	}
+
+	&__life {
+		font-size:1rem;
+		margin: 3px -1px;
+	}
+
+	&__options {
+		display: none;
+		width: 25%;
+		vertical-align: top;
+	}
+
+	&__button {
+		//float:right;
+		font-size: 1rem;
+		opacity: 0.6;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	&:hover &__options {
+		display: inline-block;
+	}
+}
