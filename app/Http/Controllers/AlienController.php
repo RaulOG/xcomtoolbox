@@ -38,9 +38,7 @@ class AlienController extends Controller
      */
     public function store(Request $request)
     {
-        $pod = Pod::find($request->input('pod_id'));
-        $alien = new Alien();
-        $pod->aliens()->save($alien);
+        $this->wea($request);
 
         return redirect('pods');
     }
@@ -76,19 +74,36 @@ class AlienController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        return response($request->all());
         $alien = Alien::find($id);
         $alienType = AlienType::where('name', '=', $request->input('alien_type'))->first();
 
-        if(!empty($alien) && !empty($alienType) && $alien->pod->user->id == Auth::user()->id){
-            $alien->type()->associate($alienType);
+        if(!empty($alien)){
+            if(!empty($alienType) && $alien->pod->user->id == Auth::user()->id){
+                $alien->type()->associate($alienType);
+            }
+
+            if($request->has('max_health')){
+                $alien->max_health      = $request->input('max_health');
+            }
+
+            if($request->has('current_health')){
+                $alien->current_health  = $request->input('current_health');
+            }
+
             $alien->save();
         }
 
-        if($request->has('mission')){
-            return redirect('/missions/'.$request->input('mission'));
-        }
+        if($request->ajax()){
+            return response('It is good');
+        }else{
+            if($request->has('mission')){
+                return redirect('/missions/'.$request->input('mission'));
+            }
 
         return redirect('pods');
+
+        }
     }
 
     /**
@@ -110,5 +125,15 @@ class AlienController extends Controller
         }
 
         return redirect('pods');
+    }
+
+    /**
+     * @param Request $request
+     */
+    private function wea(Request $request)
+    {
+        $pod = Pod::find($request->input('pod_id'));
+        $alien = new Alien();
+        $pod->aliens()->save($alien);
     }
 }

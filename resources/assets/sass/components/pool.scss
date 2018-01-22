@@ -1,13 +1,18 @@
 .pool {
 	display: none;
-	width: 50%;
+	//width: 50%;
 	padding: 0;
 	//padding: 0 30px;
 	box-sizing: border-box;
 	margin: 10px 0;
 	position:relative;
 
+	&--show {
+		display: block;
+	}
+
 	&__list {
+		text-align: left;
 		padding: 5px 0;
 		display: inline-block;
 		width: 75%;
@@ -19,6 +24,9 @@
 	}
 
 	&__options {
+		position: absolute;
+		right: 0px;
+		top: 0px;
 		display: none;
 		width: 25%;
 		vertical-align: top;
@@ -34,7 +42,11 @@
 		}
 	}
 
-	&:hover &__options {
+	//&:hover &__options {
+	//	display: inline-block;
+	//}
+
+	.alien:hover &__options {
 		display: inline-block;
 	}
 }

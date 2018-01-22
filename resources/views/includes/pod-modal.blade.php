@@ -89,6 +89,14 @@
 //                '</div>' +
 //                '</div>';
 
+        function alienImage(type){
+            if(type == "Unknown"){
+                return '<i style="font-size:3rem;" class="fa fa-user-o" aria-hidden="true"></i>';
+            }else{
+                return '<img class="image" src="/images/alien_types/' + type + '.png" alt="' + type + '">';
+            }
+        }
+
         function newAlien(id, hp=0, type = "unknown"){
             hp = parseInt(hp);
             var hpHTML = '';
@@ -105,11 +113,15 @@
 //            }else{
 //                typeHTML = '<img class="image" src="/images/alien_types/' + type + '.png" alt="' + type + '">';
 //            }
-            typeHTML = type;
+            typeHTML = alienImage(type);
 
             console.log("typeHTML: %o", typeHTML);
 
-             return '<h5>Alien '+id+'</h5>' +
+             return '<div class="alien">' +
+                    '<input type="hidden" class="alien_type_input_js" name="alien['+id+'][type]" value="'+type+'">' +
+                    '<input type="hidden" class="alien_health_input_js" name="alien['+id+'][health]" value="'+hp+'">' +
+                    '<input type="hidden" class="alien_max_health_input_js" name="alien['+id+'][max_health]" value="'+hp+'">' +
+                    '<input type="hidden" class="alien_current_health_input_js" name="alien['+id+'][current_health]" value="'+hp+'">' +
                     '<div class="pool">' +
                     '<div class="pool__list">' +
                              hpHTML +
@@ -119,23 +131,58 @@
                     '<button type="button" class="button pool__button addPool_js"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="ui selection dropdown alien_js">' +
-                    '<input type="hidden" name="alien_types[]">' +
-                    '<i class="dropdown icon"></i>' +
-                    '<div class="text">' +
-                             typeHTML +
+                     '<div class="alien__image">' +
+                     typeHTML +
                     '</div>' +
-                    '<div class="menu">' +
-                                alienItems +
-                    '</div>' +
+
+
+
+
+
+
+
+
+
+
+//                    '<div class="ui selection dropdown alien_js">' +
+//                    '<input type="hidden" name="alien_types[]">' +
+//                    '<i class="dropdown icon"></i>' +
+//                    '<div class="text">' +
+//                             typeHTML +
+//                    '</div>' +
+//                    '<div class="menu">' +
+//                                alienItems +
+//                    '</div>' +
+//                    '</div>';
                     '</div>';
         }
 
         function newHp(){
-            return '<img src="/images/hp.png" class="pool__life">';
+            return '<img src="/images/hp.png" name="hp" class="pool__life">';
+        }
+
+        function newNoHp(){
+            return '<img src="/images/nohp.png" name="nohp" class="pool__life">';
+        }
+
+        function updateAlien(id){
+            console.log('Ajax update to alien ' + id);
+            $.ajax({
+                url: "/aliens/"+id,
+                method: "PUT",
+                data: $('#alien-'+id).find('form').serialize()
+            });
         }
 
         $(document).ready(function(){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var alien_update_timeouts = [];
 
             $('.alien_count').dropdown({
                 onChange: function (value, text, $selectedItem) {
@@ -147,7 +194,6 @@
 
                     var alien_dominant = $('.alien_dominant').dropdown('get text');
                     if(alien_dominant == ""){ alien_dominant = "unknown";}
-                    console.log("alien_dominant is %o", alien_dominant);
 
                     // create aliens
                     for(var i = 1; i <= $('.alien_count').dropdown('get value'); i++ ){
@@ -170,7 +216,26 @@
             });
             $('.alien_dominant').dropdown({
                 onChange: function (value, text, $selectedItem) {
-                    $('.alien_js').dropdown('set selected', value);
+//                    $('.alien_js').dropdown('set selected', value);
+                    var alien_images = $('#pod-create .alien').find('.alien__image');
+                    var alien_type_inputs = $('#pod-create .alien').find('.alien_type_input_js');
+                    var alien_health_inputs = $('#pod-create .alien').find('.alien_health_input_js');
+
+                    alien_images.each(function(){
+                        $(this).empty();
+                        $(this).html(alienImage(text));
+                    });
+
+                    alien_type_inputs.each(function(){
+                        console.log('this: %o', $(this));
+                        console.log('text: %o', text);
+                        $(this).val(value);
+                    });
+
+//                    alien_health_inputs.each(function(){
+//                        $(this).val(text);
+//                    });
+
 //                    for(var i = 0; i < $('.alien_count').dropdown('get value'); i++ ){
 //                        $('.aliens').append(alienTypeDropdown);
 //                    }
@@ -179,21 +244,156 @@
 
             $('.alien_health').dropdown({
                 onChange: function(value, text, $selectedItem){
+                    var alien_health_inputs = $('#pod-create .alien').find('.alien_health_input_js, .alien_max_health_input_js, .alien_current_health_input_js');
+
                     $('.aliens').find('.pool .pool__life').remove();
                     for(var i = 0; i < value ; i++){
                         $('.aliens').find('.pool__list').append(newHp());
                     }
+
+                    alien_health_inputs.each(function(){
+                        $(this).val(text);
+                    });
                     $('.pool').show();
                 }
             });
 
+            $(document).on("click", ".damagePool_js", function(){
+                var alien = $(this).parents(".alien");
+                var alien_pool_list = alien.find(".pool__list");
+                var alien_form              = alien.find('form');
+
+                // is current health > 0 ? reduce that one point
+                var alien_current_health = alien.find(".alien_current_health_input_js");
+                if(parseInt(alien_current_health.val()) > 0){
+                    console.log('enters ');
+                    alien_current_health.val(parseInt(alien_current_health.val()) - 1);
+                    alien_pool_list.children("[name=hp]").first().remove();
+                    $(this).parents(".pool").find('.pool__list').append(newNoHp());
+
+                    // if alien has a form, update the alien in the backend
+                    if(alien_form.length == 1){
+                        var alien_id                = alien.attr("id").split('-')[1];
+
+                        if(alien_update_timeouts[alien_id] != null){
+                            window.clearTimeout(alien_update_timeouts[alien_id]);
+                        }
+
+                        alien_update_timeouts[alien_id] = window.setTimeout(function(){
+                            updateAlien(alien_id);
+                        }, 1000);
+                    }
+                }
+
+
+            });
+//
+//            $(document).on("click", ".healPool_js", function(){
+//
+//            });
+
             $(document).on("click", ".addPool_js", function(){
-                $(this).parents(".pool").find(".pool__list").append(newHp());
+
+                var alien                   = $(this).parents(".alien");
+                var alien_max_health        = alien.find(".alien_max_health_input_js");
+                var alien_current_health    = alien.find(".alien_current_health_input_js");
+                var alien_form              = alien.find('form');
+
+                // add hp visually
+                $(this).parents(".pool").find('.pool__list').prepend(newHp());
+
+                // update [max_health && current_health] inputs with 1 more value
+                alien_max_health.val(parseInt(alien_max_health.val()) + 1);
+                alien_current_health.val(parseInt(alien_current_health.val()) + 1);
+
+                // if alien has a form, update the alien in the backend
+                if(alien_form.length == 1){
+                    var alien_id                = alien.attr("id").split('-')[1];
+
+                    if(alien_update_timeouts[alien_id] != null){
+                        window.clearTimeout(alien_update_timeouts[alien_id]);
+                    }
+
+                    alien_update_timeouts[alien_id] = window.setTimeout(function(){
+                        updateAlien(alien_id);
+                    }, 1000);
+                }
+
                 return false;
             });
 
             $(document).on("click", ".removePool_js", function(){
-                $(this).parents(".pool").find(".pool__list").children().last('.pool_life').remove();
+
+                var alien                   = $(this).parents(".alien");
+                var alien_pool_list         = $(this).parents(".pool").find('.pool__list');
+                var alien_max_health        = alien.find(".alien_max_health_input_js");
+                var alien_current_health    = alien.find(".alien_current_health_input_js");
+                var alien_form              = alien.find('form');
+                var alien_health = $(this).parents(".alien").find(".alien_health_input_js");
+
+                // remove 1 alien hp
+                if(alien_pool_list.children("[name=hp]").length > 0 || alien_pool_list.children("[name=nohp]").length) {
+                    if(alien_pool_list.children("[name=hp]").length > 0){
+                        console.log('removing one hp');
+                        alien_pool_list.children("[name=hp]").first().remove();
+
+                        console.log('removing 1 max health input value');
+                        alien_max_health.val(parseInt(alien_max_health.val()) -1);
+
+                        console.log('removing 1 current health input value');
+                        alien_current_health.val(parseInt(alien_current_health.val()) -1);
+                    }else if(alien_pool_list.children("[name=nohp]").length > 0){
+                        console.log('removing one nohp');
+                        alien_pool_list.children("[name=nohp]").first().remove();
+                        console.log('removing 1 max health input value');
+                        alien_max_health.val(parseInt(alien_max_health.val()) -1);
+                    }
+
+                    // if alien has a form, update the alien in the backend
+                    if(alien_form.length == 1){
+                        var alien_id                = alien.attr("id").split('-')[1];
+
+                        if(alien_update_timeouts[alien_id] != null){
+                            window.clearTimeout(alien_update_timeouts[alien_id]);
+                        }
+
+                        alien_update_timeouts[alien_id] = window.setTimeout(function(){
+                            updateAlien(alien_id);
+                        }, 1000);
+                    }
+                }
+//                else if(alien_pool_list.children("[name=hp]").length > 0){
+//                    console.log('removing one hp');
+//                    alien_pool_list.children("[name=nohp]").first().remove();
+//                    console.log('removing 1 max health input value');
+//                    alien_max_health.val(parseInt(alien_max_health.val()) -1);
+//                    console.log('removing 1 current health input value');
+//                    alien_current_health.val(parseInt(alien_current_health.val()) -1);
+//                }
+
+                /*
+                // remove 1 alien hp
+                if(alien_pool_list.children("[name=nohp]").length > 0) {
+                    console.log('removing one no hp');
+                    alien_pool_list.children("[name=nohp]").first().remove();
+                    console.log('removing 1 max health input value');
+                    alien_max_health.val(parseInt(alien_max_health.val()) -1);
+                }else if(alien_pool_list.children("[name=hp]").length > 0){
+                    console.log('removing one hp');
+                    alien_pool_list.children("[name=hp]").first().remove();
+                    console.log('removing 1 max health input value');
+                    alien_max_health.val(parseInt(alien_max_health.val()) -1);
+                    console.log('removing 1 current health input value');
+                    alien_current_health.val(parseInt(alien_current_health.val()) -1);
+                }
+                */
+
+                return false;
+            });
+
+            $(document).on("click", ".overwatch_js", function(){
+//                var alien   = $(this).parents(".alien");
+                $(this).parent().toggleClass("alien__overwatch--active");
                 return false;
             });
         });

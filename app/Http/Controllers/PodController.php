@@ -53,23 +53,45 @@ class PodController extends Controller
 
         Auth::user()->pods()->save($pod);
 
-        if($request->has('alien_count')){
-            // validation
-            if($request->input('alien_count') > 1 && $request->input('alien_count') < 7){
-                for($i = 0 ; $i < $request->input('alien_count'); $i++){
-                    $alien = new Alien;
-                    if($request->has('alien_types') && $request->input('alien_types')[$i] !== null){
-                        $alien->type()->associate(AlienType::find($request->input('alien_types')[$i]));
-                    }
+        if($request->has('alien')){
+            foreach($request->input('alien') as $alien){
 
-                    if(isset($mission)){
-                        $alien->mission()->associate($mission);
-                    }
+                $newAlien = new Alien();
 
-                    $pod->aliens()->save($alien);
+                if($alien['type'] != "Unknown"){
+                    $newAlien->type()->associate(AlienType::find($alien['type']));
                 }
+
+                $newAlien->max_health       = $alien['max_health'];
+                $newAlien->current_health   = $alien['current_health'];
+
+                if(isset($mission)){
+                    $newAlien->mission()->associate($mission);
+                }
+
+                $pod->aliens()->save($newAlien);
             }
+        }else{
+            dd('has no aliens');
         }
+
+//        if($request->has('alien_count')){
+//             validation
+//            if($request->input('alien_count') > 1 && $request->input('alien_count') < 7){
+//                for($i = 0 ; $i < $request->input('alien_count'); $i++){
+//                    $alien = new Alien;
+//                    if($request->has('alien_types') && $request->input('alien_types')[$i] !== null){
+//                        $alien->type()->associate(AlienType::find($request->input('alien_types')[$i]));
+//                    }
+//
+//                    if(isset($mission)){
+//                        $alien->mission()->associate($mission);
+//                    }
+//
+//                    $pod->aliens()->save($alien);
+//                }
+//            }
+//        }
 
         if(isset($mission)){
             return redirect('/missions/'.$mission->id);

@@ -119,7 +119,8 @@ class MissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        $mission = Mission::find($id)->load(['aliens', 'type', 'council_mission']);
+        $mission = Mission::find($id);
+//        $mission = Mission::find($id)->load(['pods.aliens.type']);
 
         $alien_types = AlienType::all();
 
