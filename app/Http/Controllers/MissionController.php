@@ -47,6 +47,8 @@ class MissionController extends Controller
         $mission_type = MissionType::where(['name' => $request->input('type')])->first();
 
         $mission = new Mission();
+        $mission->state = Mission::STATE_OPEN;
+
         $mission->type()->associate($mission_type);
 //        dd($mission);
 
@@ -149,7 +151,13 @@ class MissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mission = Mission::find($id);
+
+        $mission->state = Mission::STATE_CLOSED;
+        $mission->save();
+
+
+        return redirect('/');
     }
 
     /**

@@ -14,8 +14,16 @@ html::after {
 	z-index: -50;
 }
 
-button{
+button {
 	background-color: transparent;
 	border: none;
 	outline: none;
+}
+
+body {
+	background-color: transparent;
+}
+
+form {
+	display: inline;
 }

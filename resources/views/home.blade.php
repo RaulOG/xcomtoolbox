@@ -87,7 +87,15 @@
 
         <div class="toolbox__panel toolbox__panel--double">
             <button class="button toolbox__button" data-value="overview">OVERVIEW</button>
-            <button class="button toolbox__button" data-value="mission-inbound">MISSION INBOUND</button>
+
+            @if($mission)
+                <form action="{{ route('missions.show', $mission->id) }}">
+                    <button class="button toolbox__button">ONGOING MISSION</button>
+                </form>
+            @else
+                <button class="button toolbox__button" data-value="mission-inbound">MISSION INBOUND</button>
+            @endif
+
             <button class="button toolbox__button">AIR ENGAGEMENT</button>
             <button class="button toolbox__button">SCIENCE PLAN</button>
             <button class="button toolbox__button">CONSTRUCTION OPTIMIZER</button>

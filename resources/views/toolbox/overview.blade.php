@@ -9,7 +9,10 @@
         </h3>
         <ul>
             @foreach($missions as $mission)
-                <li style="font-size:16px;color:white;list-style-type: none;">Mission {{$mission->id}} - Pod count: {{$mission->pods->count()}}, Alien count: {{$mission->aliens->count()}}</li>
+                <li style="font-size:16px;color:white;list-style-type: none;">
+                    <a href="{{ route('missions.show', $mission->id) }}">Mission {{$mission->id}}</a> -Pod count: {{$mission->pods->count()}}, Alien count: {{$mission->aliens->count()}}
+                    <label>{{ $mission->state }}</label>
+                </li>
             @endforeach
         </ul>
     </div>

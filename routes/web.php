@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth']], function(){
 
 //    Route::resource('missions', 'MissionController', ['only' => ['store', 'show']]);
 
-    Route::resource('missions', 'MissionController', ['only' => ['store', 'show']]);
+    Route::resource('missions', 'MissionController', ['only' => ['store', 'update', 'show']]);
 
     Route::prefix('toolbox')->group(function(){
         Route::get('/overview', 'ToolboxController@overview');
