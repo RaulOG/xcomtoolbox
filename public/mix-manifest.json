@@ -1,4 +1,13 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/images/hp.png": "/images/hp.png",
+    "/images/hp.sketch": "/images/hp.sketch",
+    "/images/meld.png": "/images/meld.png",
+    "/images/nohp.png": "/images/nohp.png",
+    "/images/nohp.sketch": "/images/nohp.sketch",
+    "/images/overwatch.jpg": "/images/overwatch.jpg",
+    "/images/skyranger.jpg": "/images/skyranger.jpg",
+    "/images/skyranger2.jpg": "/images/skyranger2.jpg",
+    "/images/xcom.jpg": "/images/xcom.jpg"
 }

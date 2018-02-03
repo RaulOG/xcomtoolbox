@@ -180,7 +180,7 @@ return [
         /*
          * Our stuff
          */
-        Barryvdh\Debugbar\ServiceProvider::class,
+//        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
