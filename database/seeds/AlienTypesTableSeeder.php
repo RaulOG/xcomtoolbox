@@ -12,20 +12,31 @@ class AlienTypesTableSeeder extends Seeder
      */
     public function run()
     {
-        AlienType::create([
-            'name'      => 'sectoid',
-        ]);
+        $alienTypes = [
+            'sectoid',
+            'drone',
+            'thinman',
+            'seeker',
+            'outsider',
+            'floater',
+            'chryssalid',
+            'zombie',
+            'muton',
+            'cyberdisc',
+            'mechtoid',
+            'berserker',
+            'sectoidcommander',
+            'heavyfloater',
+            'mutonelite',
+            'sectopod',
+            'ethereal',
+            'exalt',
+        ];
 
-        AlienType::create([
-            'name'      => 'drone',
-        ]);
-
-        AlienType::create([
-            'name'      => 'floater',
-        ]);
-
-        AlienType::create([
-            'name'      => 'thinman',
-        ]);
+        foreach ($alienTypes as $type) {
+            AlienType::create([
+                'name' => $type
+            ]);
+        }
     }
 }
