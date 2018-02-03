@@ -74,7 +74,6 @@ class AlienController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        return response($request->all());
         $alien = Alien::find($id);
         $alienType = AlienType::where('name', '=', $request->input('alien_type'))->first();
 

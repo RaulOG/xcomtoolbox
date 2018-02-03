@@ -74,6 +74,9 @@
                                 <button type="button" class="button pool__button damagePool_js">
                                     <span style="color: red;" class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
                                 </button>
+                                <button type="button" class="button pool__button kill_js">
+                                    <span style="color: red;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
                             </div>
                         </div>
                         <div class="alien__image">

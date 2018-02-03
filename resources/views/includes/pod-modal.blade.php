@@ -285,12 +285,37 @@
                     }
                 }
 
-
             });
-//
-//            $(document).on("click", ".healPool_js", function(){
-//
-//            });
+
+            $(document).on("click", ".kill_js", function () {
+                var alien = $(this).parents(".alien");
+                var alien_pool_list = alien.find(".pool__list");
+                var alien_form = alien.find('form');
+
+                var alien_current_health = alien.find(".alien_current_health_input_js");
+
+                if (parseInt(alien_current_health.val()) > 0) {
+                    alien_current_health.val(0);
+
+                    alien_pool_list.children("[name=hp]").remove().each(function () {
+                        console.log('remove!');
+                        $(this).parents(".pool").find('.pool__list').append(newNoHp());
+                    }.bind(this));
+
+                    // if alien has a form, update the alien in the backend
+                    if (alien_form.length == 1) {
+                        var alien_id = alien.attr("id").split('-')[1];
+
+                        if (alien_update_timeouts[alien_id] != null) {
+                            window.clearTimeout(alien_update_timeouts[alien_id]);
+                        }
+
+                        alien_update_timeouts[alien_id] = window.setTimeout(function () {
+                            updateAlien(alien_id);
+                        }, 1000);
+                    }
+                }
+            });
 
             $(document).on("click", ".addPool_js", function(){
 
